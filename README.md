@@ -2,7 +2,7 @@
 
 A full-featured collaborative whiteboard built with the MERN stack (MongoDB, Express.js, React.js, Node.js) and Socket.io for real-time collaboration.
 
-## 🚀 Features
+##  Features
 
 - **Real-time Collaboration**: Multiple users can draw simultaneously with live synchronization
 - **Live Cursor Tracking**: See other users' cursors moving in real-time
@@ -12,7 +12,7 @@ A full-featured collaborative whiteboard built with the MERN stack (MongoDB, Exp
 - **User Presence**: Display active user count in each room
 - **Responsive Design**: Works on desktop and tablet devices
 
-## 🛠 Technology Stack
+##  Technology Stack
 
 - **Frontend**: React.js with Vite
 - **Backend**: Node.js with Express.js
@@ -21,7 +21,7 @@ A full-featured collaborative whiteboard built with the MERN stack (MongoDB, Exp
 - **Styling**: Tailwind CSS
 - **Icons**: Lucide React
 
-## 📋 Prerequisites
+##  Prerequisites
 
 Before running this application, make sure you have the following installed:
 
@@ -29,7 +29,7 @@ Before running this application, make sure you have the following installed:
 - MongoDB (v4.4 or higher)
 - npm or yarn package manager
 
-## 🔧 Installation & Setup
+##  Installation & Setup
 
 ### 1. Clone the Repository
 ```bash
@@ -80,7 +80,7 @@ This starts the backend server on `http://localhost:3001`
 
 Open your browser and navigate to `http://localhost:3000`
 
-## 🎯 How to Use
+##  How to Use
 
 1. **Create a Room**: Click "Create New Room" to generate a random room code
 2. **Join a Room**: Enter an existing room code and click "Join Room"
@@ -88,7 +88,7 @@ Open your browser and navigate to `http://localhost:3000`
 4. **Collaborate**: Share your room code with others to collaborate in real-time
 5. **Clear Canvas**: Use the clear button to reset the entire canvas
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 collaborative-whiteboard/
@@ -114,7 +114,7 @@ collaborative-whiteboard/
 └── README.md                    # This file
 ```
 
-## 🔌 API Documentation
+##  API Documentation
 
 ### REST Endpoints
 
@@ -183,7 +183,7 @@ Get room information and drawing data.
 | `canvas-cleared` | Canvas was cleared | `{}` |
 | `drawing-data` | Historical drawing data | `Array<DrawingCommand>` |
 
-## 🏗 Architecture Overview
+##  Architecture Overview
 
 ### High-Level System Design
 
@@ -218,197 +218,6 @@ Get room information and drawing data.
 2. **Real-time Events**: Drawing actions and cursor movements sent via Socket.io
 3. **State Synchronization**: All clients receive real-time updates and maintain synchronized canvas state
 4. **Persistence**: Drawing commands stored in MongoDB for room persistence
-
-## 🚀 Deployment Guide
-
-### Production Environment Setup
-
-#### 1. Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-NODE_ENV=production
-PORT=3001
-MONGODB_URI=mongodb://localhost:27017/collaborative-whiteboard
-CLIENT_URL=http://your-domain.com
-```
-
-#### 2. Build the Frontend
-
-```bash
-npm run build
-```
-
-#### 3. Production Dependencies
-
-Install only production dependencies:
-
-```bash
-npm ci --only=production
-```
-
-#### 4. Process Management
-
-Use PM2 for process management:
-
-```bash
-npm install -g pm2
-pm2 start server/server.js --name "whiteboard-server"
-pm2 startup
-pm2 save
-```
-
-### Docker Deployment
-
-#### Dockerfile
-
-```dockerfile
-FROM node:18-alpine
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm ci --only=production
-
-COPY . .
-RUN npm run build
-
-EXPOSE 3001
-
-CMD ["node", "server/server.js"]
-```
-
-#### Docker Compose
-
-```yaml
-version: '3.8'
-services:
-  app:
-    build: .
-    ports:
-      - "3001:3001"
-    environment:
-      - MONGODB_URI=mongodb://mongo:27017/collaborative-whiteboard
-    depends_on:
-      - mongo
-  
-  mongo:
-    image: mongo:5
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-
-volumes:
-  mongo_data:
-```
-
-### Cloud Deployment Options
-
-#### Heroku
-1. Install Heroku CLI
-2. Create Heroku app: `heroku create your-app-name`
-3. Add MongoDB Atlas addon: `heroku addons:create mongolab`
-4. Deploy: `git push heroku main`
-
-#### DigitalOcean App Platform
-1. Connect your GitHub repository
-2. Configure build settings:
-   - Build Command: `npm run build`
-   - Run Command: `node server/server.js`
-3. Add MongoDB database component
-
-#### AWS EC2
-1. Launch EC2 instance with Node.js
-2. Install MongoDB or use AWS DocumentDB
-3. Configure security groups for ports 80/443
-4. Use nginx as reverse proxy
-5. Set up SSL with Let's Encrypt
-
-### Performance Optimization
-
-#### Production Optimizations
-
-1. **Enable Gzip Compression**:
-```javascript
-app.use(compression());
-```
-
-2. **Rate Limiting**:
-```javascript
-const rateLimit = require('express-rate-limit');
-app.use(rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
-}));
-```
-
-3. **MongoDB Indexing**:
-```javascript
-// Add indexes for better query performance
-db.rooms.createIndex({ "roomId": 1 });
-db.rooms.createIndex({ "lastActivity": 1 });
-```
-
-4. **Socket.io Scaling**:
-```javascript
-// Use Redis adapter for multiple server instances
-const redisAdapter = require('socket.io-redis');
-io.adapter(redisAdapter({ host: 'localhost', port: 6379 }));
-```
-
-## 🔧 Development
-
-### Available Scripts
-
-- `npm run dev` - Start frontend development server
-- `npm run build` - Build frontend for production
-- `npm run preview` - Preview production build
-- `npm run server` - Start backend server
-- `npm run server:dev` - Start backend with auto-reload
-- `npm run lint` - Run ESLint
-
-### Development Tips
-
-1. **Hot Reload**: Both frontend and backend support hot reloading during development
-2. **Debugging**: Use browser dev tools for frontend, Node.js debugger for backend
-3. **Database**: Use MongoDB Compass for database visualization
-4. **Socket Testing**: Use Socket.io client tester for debugging real-time events
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-#### MongoDB Connection Error
-```
-Error: connect ECONNREFUSED 127.0.0.1:27017
-```
-**Solution**: Make sure MongoDB is running on your system.
-
-#### Socket Connection Failed
-```
-Error: Failed to connect to server
-```
-**Solution**: Ensure backend server is running on port 3001.
-
-#### Canvas Not Responsive
-**Solution**: Check browser console for JavaScript errors, ensure proper canvas sizing.
-
-#### Drawing Not Syncing
-**Solution**: Verify Socket.io connection status, check network connectivity.
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Commit changes: `git commit -am 'Add feature'`
-4. Push to branch: `git push origin feature-name`
-5. Submit a pull request
 
 ## 📞 Support
 
