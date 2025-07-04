@@ -218,10 +218,3 @@ Get room information and drawing data.
 2. **Real-time Events**: Drawing actions and cursor movements sent via Socket.io
 3. **State Synchronization**: All clients receive real-time updates and maintain synchronized canvas state
 4. **Persistence**: Drawing commands stored in MongoDB for room persistence
-
-## 📞 Support
-
-For support and questions:
-- Create an issue in the GitHub repository
-- Check the troubleshooting section above
-- Review the API documentation for integration help
